@@ -414,3 +414,11 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--maricheck-sea-green-dark);
 }
+@media (max-width: 768px) {
+  input:required:valid,
+  select:required:valid,
+  textarea:required:valid {
+    outline: none;
+    box-shadow: none;
+  }
+}
