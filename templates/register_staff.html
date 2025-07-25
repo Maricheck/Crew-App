@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Registration - Maricheck{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-briefcase me-2"></i>
+                    Offshore Employee Registration
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    <!-- Personal Information -->
+                    <h6 class="mb-3"><i class="fas fa-user me-2"></i>Personal Information</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="full_name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="email_or_whatsapp" class="form-label">Email or WhatsApp Number *</label>
+                            <input type="text" class="form-control" id="email_or_whatsapp" name="email_or_whatsapp" required placeholder="email@example.com or +1234567890">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="location" class="form-label">Location / City</label>
+                            <input type="text" class="form-control" id="location" name="location" placeholder="e.g., Mumbai, Manila">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="availability_date" class="form-label">Availability Date</label>
+                            <input type="date" class="form-control" id="availability_date" name="availability_date">
+                        </div>
+                    </div>
+                    
+                    <!-- Professional Information -->
+                    <h6 class="mb-3 mt-4"><i class="fas fa-building me-2"></i>Professional Information</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="position_applying" class="form-label">Position Applying For *</label>
+                            <input type="text" class="form-control" id="position_applying" name="position_applying" required placeholder="e.g., Operations Manager, HR Specialist">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="department" class="form-label">Department *</label>
+                            <select class="form-select" id="department" name="department" required>
+                                <option value="">Select department</option>
+                                <option value="Ops">Operations</option>
+                                <option value="HR">Human Resources</option>
+                                <option value="Tech">Technology</option>
+                                <option value="Crewing">Crewing</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="years_experience" class="form-label">Years of Experience</label>
+                            <input type="number" class="form-control" id="years_experience" name="years_experience" min="0" max="50">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="current_employer" class="form-label">Current Employer</label>
+                            <input type="text" class="form-control" id="current_employer" name="current_employer" placeholder="Current company name">
+                        </div>
+                    </div>
+                    
+                    <!-- Document Uploads -->
+                    <h6 class="mb-3 mt-4"><i class="fas fa-upload me-2"></i>Document Uploads</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="resume_file" class="form-label">Resume/CV (PDF/DOC)</label>
+                            <input type="file" class="form-control" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="photo_file" class="form-label">Passport Size Photo (JPG/PNG)</label>
+                            <input type="file" class="form-control" id="photo_file" name="photo_file" accept=".jpg,.jpeg,.png">
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Application Process:</strong>
+                        Your application will be reviewed by our HR team. Status: Screening → Approved
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-lg" style="background-color: #20B2AA; color: white;">
+                            <i class="fas fa-briefcase me-1"></i>
+                            Submit Staff Application
+                        </button>
+                        <a href="{{ url_for('public_home') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                    
+                    <p class="text-muted mt-3 small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Fields marked with * are required. File uploads are recommended for faster processing.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByTagName('form');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+</script>
+{% endblock %}

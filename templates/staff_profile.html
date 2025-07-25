@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Staff Profile - {{ staff.full_name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3">
+                <i class="fas fa-briefcase me-2"></i>
+                Staff Profile: {{ staff.full_name }}
+            </h1>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left me-1"></i>
+                Back to Dashboard
+            </a>
+        </div>
+
+        <div class="row">
+            <!-- Profile Photo and Status -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        {% if staff.photo_file %}
+                            <img src="{{ url_for('download_file', folder='staff', filename=staff.photo_file) }}" 
+                                 class="img-fluid rounded-circle mb-3" 
+                                 style="width: 150px; height: 150px; object-fit: cover;"
+                                 alt="Profile Photo">
+                        {% else %}
+                            <div class="bg-light rounded-circle d-flex align-items-center justify-content-center mb-3 mx-auto" 
+                                 style="width: 150px; height: 150px;">
+                                <i class="fas fa-user fa-4x text-muted"></i>
+                            </div>
+                        {% endif %}
+                        
+                        <h4>{{ staff.full_name }}</h4>
+                        <p class="text-muted">{{ staff.position_applying }}</p>
+                        <p class="text-muted">{{ staff.department }} Department</p>
+                        
+                        {% if staff.status == 1 %}
+                            <span class="badge bg-warning fs-6">Screening</span>
+                        {% elif staff.status == 3 %}
+                            <span class="badge bg-success fs-6">Approved</span>
+                        {% elif staff.status == -1 %}
+                            <span class="badge bg-danger fs-6">Rejected</span>
+                        {% endif %}
+                        
+                        <!-- Action Buttons -->
+                        {% if staff.status == 1 %}
+                        <div class="mt-3">
+                            <a href="{{ url_for('approve_staff', staff_id=staff.id) }}" 
+                               class="btn btn-success btn-sm me-2"
+                               onclick="return confirm('Approve this staff member?')">
+                                <i class="fas fa-check me-1"></i>
+                                Approve
+                            </a>
+                            <a href="{{ url_for('reject_staff', staff_id=staff.id) }}" 
+                               class="btn btn-danger btn-sm"
+                               onclick="return confirm('Reject this staff member?')">
+                                <i class="fas fa-times me-1"></i>
+                                Reject
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-info-circle me-2"></i>Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>Full Name:</strong><br>
+                                {{ staff.full_name }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Contact:</strong><br>
+                                {{ staff.email_or_whatsapp }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Location/City:</strong><br>
+                                {{ staff.location or 'Not provided' }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Availability Date:</strong><br>
+                                {% if staff.availability_date %}
+                                    {{ staff.availability_date.strftime('%B %d, %Y') }}
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5><i class="fas fa-building me-2"></i>Professional Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <strong>Position Applying For:</strong><br>
+                                {{ staff.position_applying }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Department:</strong><br>
+                                {{ staff.department }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Years of Experience:</strong><br>
+                                {% if staff.years_experience %}
+                                    {{ staff.years_experience }} years
+                                {% else %}
+                                    Not provided
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <strong>Current Employer:</strong><br>
+                                {{ staff.current_employer or 'Not provided' }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documents Section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-file-alt me-2"></i>Submitted Documents</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <i class="fas fa-file-pdf fa-2x text-danger mb-2 d-block"></i>
+                                    <strong>Resume/CV</strong><br>
+                                    {% if staff.resume_file %}
+                                        <a href="{{ url_for('download_file', folder='staff', filename=staff.resume_file) }}" 
+                                           class="btn btn-sm btn-outline-primary mt-2">
+                                            <i class="fas fa-download me-1"></i>
+                                            Download
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">Not uploaded</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <i class="fas fa-image fa-2x text-info mb-2 d-block"></i>
+                                    <strong>Profile Photo</strong><br>
+                                    {% if staff.photo_file %}
+                                        <a href="{{ url_for('download_file', folder='staff', filename=staff.photo_file) }}" 
+                                           class="btn btn-sm btn-outline-primary mt-2">
+                                            <i class="fas fa-download me-1"></i>
+                                            Download
+                                        </a>
+                                    {% else %}
+                                        <span class="text-muted">Not uploaded</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Registration Timeline -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="fas fa-clock me-2"></i>Application Timeline</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Applied:</strong> {{ staff.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                        <p class="mb-0"><strong>Last Updated:</strong> {{ staff.updated_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

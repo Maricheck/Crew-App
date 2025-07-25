@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Crew Registration - Maricheck{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-anchor me-2"></i>
+                    Maricheck Crew Registration
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data" novalidate>
+                    <!-- Basic Information -->
+                    <h6 class="mb-3"><i class="fas fa-user me-2"></i>Personal Information</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="name" class="form-label">Full Name *</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="nationality" class="form-label">Nationality</label>
+                            <input type="text" class="form-control" id="nationality" name="nationality" placeholder="e.g., Indian, Filipino">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="date_of_birth" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="date_of_birth" name="date_of_birth">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="passport" class="form-label">Passport Number *</label>
+                            <input type="text" class="form-control" id="passport" name="passport" required placeholder="Enter passport number" style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                    
+                    <!-- Professional Information -->
+                    <h6 class="mb-3 mt-4"><i class="fas fa-anchor me-2"></i>Professional Information</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="rank" class="form-label">Rank/Position *</label>
+                            <select class="form-select" id="rank" name="rank" required>
+                                <option value="">Select rank/position</option>
+                                <option value="Captain">Captain</option>
+                                <option value="First Officer">First Officer</option>
+                                <option value="Second Officer">Second Officer</option>
+                                <option value="Third Officer">Third Officer</option>
+                                <option value="Chief Engineer">Chief Engineer</option>
+                                <option value="Second Engineer">Second Engineer</option>
+                                <option value="Third Engineer">Third Engineer</option>
+                                <option value="Bosun">Bosun</option>
+                                <option value="Able Seaman">Able Seaman</option>
+                                <option value="Ordinary Seaman">Ordinary Seaman</option>
+                                <option value="Cook">Cook</option>
+                                <option value="Steward">Steward</option>
+                                <option value="Radio Officer">Radio Officer</option>
+                                <option value="Electrician">Electrician</option>
+                                <option value="Fitter">Fitter</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="years_experience" class="form-label">Years of Experience</label>
+                            <input type="number" class="form-control" id="years_experience" name="years_experience" min="0" max="50">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="last_vessel_type" class="form-label">Last Vessel Type</label>
+                            <input type="text" class="form-control" id="last_vessel_type" name="last_vessel_type" placeholder="e.g., Bulk Carrier, Container Ship">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="availability_date" class="form-label">Availability Date</label>
+                            <input type="date" class="form-control" id="availability_date" name="availability_date">
+                        </div>
+                    </div>
+                    
+                    <!-- Document Uploads -->
+                    <h6 class="mb-3 mt-4"><i class="fas fa-upload me-2"></i>Document Uploads</h6>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="passport_file" class="form-label">Passport Copy (PDF/JPG)</label>
+                            <input type="file" class="form-control" id="passport_file" name="passport_file" accept=".pdf,.jpg,.jpeg">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="cdc_file" class="form-label">CDC Certificate (PDF/JPG)</label>
+                            <input type="file" class="form-control" id="cdc_file" name="cdc_file" accept=".pdf,.jpg,.jpeg">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="resume_file" class="form-label">Resume/CV (PDF/DOC)</label>
+                            <input type="file" class="form-control" id="resume_file" name="resume_file" accept=".pdf,.doc,.docx">
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <label for="photo_file" class="form-label">Passport Size Photo (JPG/PNG)</label>
+                            <input type="file" class="form-control" id="photo_file" name="photo_file" accept=".jpg,.jpeg,.png">
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        <strong>Registration Process:</strong>
+                        After registration, your application will go through: Registered → Screening → Documents Verified → Approved
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-anchor me-1"></i>
+                            Submit Crew Registration
+                        </button>
+                        <a href="{{ url_for('public_home') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>
+                            Back to Home
+                        </a>
+                    </div>
+                    
+                    <p class="text-muted mt-3 small">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Fields marked with * are required. File uploads are optional but recommended for faster processing.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Form validation
+(function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        var forms = document.getElementsByTagName('form');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+})();
+
+// Auto-uppercase passport input
+document.getElementById('passport').addEventListener('input', function(e) {
+    this.value = this.value.toUpperCase();
+});
+</script>
+{% endblock %}

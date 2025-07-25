@@ -1,0 +1,416 @@
+/* Maricheck Maritime Crew Management - Custom Styles */
+
+/* Color Variables */
+:root {
+    --maricheck-navy: #1e3a8a;        /* Navy Blue */
+    --maricheck-navy-dark: #1e40af;   /* Darker Navy */
+    --maricheck-navy-light: #3b82f6;  /* Lighter Navy */
+    --maricheck-sea-green: #20B2AA;   /* Sea Green */
+    --maricheck-sea-green-dark: #1a9b94; /* Darker Sea Green */
+    --maricheck-sea-green-light: #40e0d0; /* Lighter Sea Green */
+    --maricheck-gold: #fbbf24;        /* Gold accent */
+    --maricheck-white: #ffffff;
+    --maricheck-light-gray: #f8fafc;
+    --maricheck-dark-gray: #334155;
+}
+
+/* Typography */
+body {
+    font-family: 'Inter', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--maricheck-navy);
+}
+
+/* Navigation */
+.maricheck-navbar {
+    background: linear-gradient(135deg, var(--maricheck-navy) 0%, var(--maricheck-navy-dark) 100%);
+    box-shadow: 0 4px 20px rgba(30, 58, 138, 0.3);
+    border: none;
+    padding: 1rem 0;
+}
+
+.maricheck-brand-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--maricheck-white);
+    text-decoration: none;
+}
+
+.maricheck-tagline {
+    font-size: 0.75rem;
+    color: var(--maricheck-sea-green-light);
+    font-weight: 400;
+    line-height: 1;
+}
+
+.maricheck-logo {
+    transition: transform 0.3s ease;
+}
+
+.maricheck-logo:hover {
+    transform: scale(1.1);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--maricheck-sea-green) 0%, var(--maricheck-sea-green-dark) 100%);
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(32, 178, 170, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--maricheck-sea-green-dark) 0%, var(--maricheck-sea-green) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(32, 178, 170, 0.4);
+}
+
+.btn-secondary {
+    background: var(--maricheck-navy);
+    border: none;
+    font-weight: 500;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--maricheck-navy-dark);
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--maricheck-sea-green);
+    color: var(--maricheck-sea-green);
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover {
+    background: var(--maricheck-sea-green);
+    border-color: var(--maricheck-sea-green);
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--maricheck-navy);
+    color: var(--maricheck-navy);
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--maricheck-navy);
+    border-color: var(--maricheck-navy);
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background: var(--maricheck-gold);
+    border: none;
+    color: var(--maricheck-navy);
+    font-weight: 600;
+}
+
+.btn-info {
+    background: var(--maricheck-sea-green-light);
+    border: none;
+    color: var(--maricheck-navy);
+    font-weight: 500;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: linear-gradient(135deg, var(--maricheck-navy) 0%, var(--maricheck-navy-dark) 100%);
+    color: var(--maricheck-white);
+    border: none;
+    padding: 1.5rem;
+    font-weight: 600;
+}
+
+.card-body {
+    padding: 2rem;
+}
+
+/* Status badges and colors */
+.bg-secondary {
+    background: var(--maricheck-dark-gray) !important;
+}
+
+.badge.bg-secondary {
+    background: var(--maricheck-navy) !important;
+}
+
+.bg-success, .badge.bg-success {
+    background: var(--maricheck-sea-green) !important;
+}
+
+.bg-info, .badge.bg-info {
+    background: var(--maricheck-sea-green-light) !important;
+    color: var(--maricheck-navy) !important;
+}
+
+.bg-warning, .badge.bg-warning {
+    background: var(--maricheck-gold) !important;
+    color: var(--maricheck-navy) !important;
+}
+
+.text-primary {
+    color: var(--maricheck-sea-green) !important;
+}
+
+.text-info {
+    color: var(--maricheck-sea-green-light) !important;
+}
+
+/* Progress bars */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background: rgba(30, 58, 138, 0.1);
+}
+
+.progress-bar {
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--maricheck-sea-green) 0%, var(--maricheck-sea-green-light) 100%);
+}
+
+.progress-bar.bg-secondary {
+    background: var(--maricheck-navy) !important;
+}
+
+.progress-bar.bg-warning {
+    background: var(--maricheck-gold) !important;
+}
+
+.progress-bar.bg-info {
+    background: var(--maricheck-sea-green-light) !important;
+}
+
+.progress-bar.bg-success {
+    background: var(--maricheck-sea-green) !important;
+}
+
+/* Forms */
+.form-control, .form-select {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--maricheck-sea-green);
+    box-shadow: 0 0 0 0.2rem rgba(32, 178, 170, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--maricheck-navy);
+    margin-bottom: 0.5rem;
+}
+
+/* Alerts */
+.alert {
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+}
+
+.alert-success {
+    background: rgba(32, 178, 170, 0.1);
+    color: var(--maricheck-sea-green-dark);
+    border-left: 4px solid var(--maricheck-sea-green);
+}
+
+.alert-info {
+    background: rgba(64, 224, 208, 0.1);
+    color: var(--maricheck-navy);
+    border-left: 4px solid var(--maricheck-sea-green-light);
+}
+
+.alert-warning {
+    background: rgba(251, 191, 36, 0.1);
+    color: var(--maricheck-navy);
+    border-left: 4px solid var(--maricheck-gold);
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border-left: 4px solid #ef4444;
+}
+
+/* Tables */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.table th {
+    background: var(--maricheck-navy);
+    color: var(--maricheck-white);
+    border: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+}
+
+.table td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-color: #e2e8f0;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) > td {
+    background: rgba(248, 250, 252, 0.5);
+}
+
+/* Statistics Cards */
+.card.bg-secondary {
+    background: linear-gradient(135deg, var(--maricheck-navy) 0%, var(--maricheck-navy-dark) 100%) !important;
+    color: var(--maricheck-white);
+}
+
+.card.bg-warning {
+    background: linear-gradient(135deg, var(--maricheck-gold) 0%, #f59e0b 100%) !important;
+    color: var(--maricheck-navy);
+}
+
+.card.bg-info {
+    background: linear-gradient(135deg, var(--maricheck-sea-green-light) 0%, var(--maricheck-sea-green) 100%) !important;
+    color: var(--maricheck-navy);
+}
+
+.card.bg-success {
+    background: linear-gradient(135deg, var(--maricheck-sea-green) 0%, var(--maricheck-sea-green-dark) 100%) !important;
+    color: var(--maricheck-white);
+}
+
+/* Footer */
+.maricheck-footer {
+    background: linear-gradient(135deg, var(--maricheck-navy) 0%, var(--maricheck-navy-dark) 100%);
+    border-top: 3px solid var(--maricheck-sea-green);
+    margin-top: auto;
+}
+
+/* Hero sections */
+.maricheck-hero {
+    background: linear-gradient(135deg, var(--maricheck-light-gray) 0%, #e2e8f0 50%, rgba(32, 178, 170, 0.1) 100%);
+    padding: 4rem 0;
+    margin: -2rem -15px 3rem -15px;
+    border-radius: 0 0 30px 30px;
+}
+
+/* Navigation active states */
+.navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 0.25rem;
+    padding: 0.5rem 1rem !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--maricheck-sea-green-light) !important;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Special elements */
+.maricheck-process-step {
+    transition: all 0.3s ease;
+}
+
+.maricheck-process-step:hover {
+    transform: translateY(-5px);
+}
+
+.maricheck-process-step .badge {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.25rem;
+    margin: 0 auto 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .maricheck-brand-name {
+        font-size: 1.25rem;
+    }
+    
+    .maricheck-tagline {
+        font-size: 0.7rem;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+    
+    .btn {
+        padding: 0.625rem 1.5rem;
+    }
+}
+
+/* Loading and animation effects */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--maricheck-sea-green);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--maricheck-sea-green-dark);
+}

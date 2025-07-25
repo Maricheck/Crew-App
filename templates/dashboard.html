@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+
+{% block title %}Maricheck Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 d-flex align-items-center">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                Maricheck Admin Dashboard
+            </h1>
+            <div>
+                <a href="{{ url_for('register') }}" class="btn btn-primary me-2">
+                    <i class="fas fa-anchor me-1"></i>
+                    Add Crew
+                </a>
+                <a href="{{ url_for('register_staff') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-briefcase me-1"></i>
+                    Add Staff
+                </a>
+            </div>
+        </div>
+
+        <!-- Enhanced Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-2x text-primary mb-2"></i>
+                        <h4 class="card-title">{{ stats.total_registrations }}</h4>
+                        <p class="card-text text-muted">Total Registrations</p>
+                        <small class="text-muted">Crew + Staff</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-anchor fa-2x text-warning mb-2"></i>
+                        <h4 class="card-title">{{ stats.crew_in_screening }}</h4>
+                        <p class="card-text text-muted">Crew in Screening</p>
+                        <small class="text-muted">Maritime Personnel</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-briefcase fa-2x text-info mb-2"></i>
+                        <h4 class="card-title">{{ stats.staff_in_screening }}</h4>
+                        <p class="card-text text-muted">Staff in Screening</p>
+                        <small class="text-muted">Office/Offshore</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 mb-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <i class="fas fa-check-circle fa-2x text-success mb-2"></i>
+                        <h4 class="card-title">{{ stats.approved_profiles }}</h4>
+                        <p class="card-text text-muted">Approved Profiles</p>
+                        <small class="text-muted">Both Crew & Staff</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile View Section like Paris Hiring Panel -->
+        <div class="row">
+            <!-- Crew in Screening -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-anchor me-2"></i>
+                            Crew in Screening ({{ crew_by_status.screening|length }})
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if crew_by_status.screening %}
+                            {% for member in crew_by_status.screening %}
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <div>
+                                    <a href="{{ url_for('crew_profile', crew_id=member.id) }}" class="fw-bold text-decoration-none">
+                                        {{ member.name }}
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">{{ member.rank }} • {{ member.passport }}</small>
+                                </div>
+                                <span class="badge bg-warning">Screening</span>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted mb-0">No crew members in screening</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Staff in Screening -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-briefcase me-2"></i>
+                            Staff in Screening ({{ staff_by_status.screening|length }})
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if staff_by_status.screening %}
+                            {% for member in staff_by_status.screening %}
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <div>
+                                    <a href="{{ url_for('staff_profile', staff_id=member.id) }}" class="fw-bold text-decoration-none">
+                                        {{ member.full_name }}
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">{{ member.position_applying }} • {{ member.department }}</small>
+                                </div>
+                                <span class="badge bg-warning">Screening</span>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted mb-0">No staff members in screening</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approved Crew -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Approved Crew ({{ crew_by_status.approved|length }})
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if crew_by_status.approved %}
+                            {% for member in crew_by_status.approved %}
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <div>
+                                    <a href="{{ url_for('crew_profile', crew_id=member.id) }}" class="fw-bold text-decoration-none">
+                                        {{ member.name }}
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">{{ member.rank }} • {{ member.passport }}</small>
+                                </div>
+                                <span class="badge bg-success">Approved</span>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted mb-0">No approved crew members</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Approved Staff -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-user-check me-2"></i>
+                            Approved Staff ({{ staff_by_status.approved|length }})
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        {% if staff_by_status.approved %}
+                            {% for member in staff_by_status.approved %}
+                            <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                                <div>
+                                    <a href="{{ url_for('staff_profile', staff_id=member.id) }}" class="fw-bold text-decoration-none">
+                                        {{ member.full_name }}
+                                    </a>
+                                    <br>
+                                    <small class="text-muted">{{ member.position_applying }} • {{ member.department }}</small>
+                                </div>
+                                <span class="badge bg-success">Approved</span>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <p class="text-muted mb-0">No approved staff members</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

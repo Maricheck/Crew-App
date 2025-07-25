@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}Maricheck Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 d-flex align-items-center">
+                <i class="fas fa-chart-line me-2 text-primary"></i>
+                Maricheck Admin Dashboard
+            </h1>
+            <a href="{{ url_for('register') }}" class="btn btn-primary">
+                <i class="fas fa-user-plus me-1"></i>
+                Add New Crew Member
+            </a>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card bg-secondary">
+                    <div class="card-body text-center">
+                        <i class="fas fa-users fa-2x mb-2"></i>
+                        <h4>{{ crew|length }}</h4>
+                        <small>Total Crew</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-warning">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clock fa-2x mb-2"></i>
+                        <h4>{{ crew|selectattr('status', 'equalto', 1)|list|length }}</h4>
+                        <small>In Screening</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-info">
+                    <div class="card-body text-center">
+                        <i class="fas fa-file-check fa-2x mb-2"></i>
+                        <h4>{{ crew|selectattr('status', 'equalto', 2)|list|length }}</h4>
+                        <small>Documents Verified</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card bg-success">
+                    <div class="card-body text-center">
+                        <i class="fas fa-check-circle fa-2x mb-2"></i>
+                        <h4>{{ crew|selectattr('status', 'equalto', 3)|list|length }}</h4>
+                        <small>Approved</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Crew List -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-list me-2"></i>
+                    All Crew Members
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if crew %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Rank</th>
+                                    <th>Passport</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for member in crew %}
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-user me-1"></i>
+                                        {{ member.name }}
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-secondary">{{ member.rank }}</span>
+                                    </td>
+                                    <td>
+                                        <code>{{ member.passport }}</code>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-{{ colors[member.status] }}">
+                                            {{ stages[member.status] }}
+                                        </span>
+                                        <!-- Progress bar -->
+                                        <div class="progress mt-1" style="height: 4px;">
+                                            <div class="progress-bar bg-{{ colors[member.status] }}" 
+                                                 style="width: {{ ((member.status + 1) / stages|length * 100)|round }}%"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if member.status < stages|length - 1 %}
+                                            <a href="{{ url_for('update_status', crew_id=member.id) }}" 
+                                               class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-arrow-right me-1"></i>
+                                                Next Stage
+                                            </a>
+                                        {% else %}
+                                            <span class="badge bg-success">
+                                                <i class="fas fa-check me-1"></i>
+                                                Complete
+                                            </span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h4 class="text-muted">No Crew Members Registered</h4>
+                        <p class="text-muted">Start by registering your first crew member.</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary">
+                            <i class="fas fa-user-plus me-1"></i>
+                            Register First Crew Member
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

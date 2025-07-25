@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block title %}Application Tracking - Maricheck{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-compass me-2"></i>
+                    Maricheck Application Tracking
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="passport" class="form-label">
+                            <i class="fas fa-passport me-1"></i>
+                            Enter Your Passport Number
+                        </label>
+                        <input type="text" 
+                               class="form-control form-control-lg" 
+                               id="passport" 
+                               name="passport" 
+                               required
+                               placeholder="Enter passport number"
+                               style="text-transform: uppercase;">
+                        <div class="form-text">
+                            Enter the passport number you used during registration.
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search me-1"></i>
+                            Track Status
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if crew %}
+        <!-- Status Display -->
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="fas fa-user-check me-2"></i>
+                    Application Found
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6>Name:</h6>
+                        <p class="mb-2">{{ crew.name }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Rank:</h6>
+                        <p class="mb-2">
+                            <span class="badge bg-secondary">{{ crew.rank }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <h6 class="mb-3">Application Progress:</h6>
+                
+                <!-- Progress Steps -->
+                <div class="row">
+                    {% for i in range(stages|length) %}
+                    <div class="col-6 col-md-3 mb-3">
+                        <div class="text-center">
+                            {% if i <= crew.status %}
+                                <div class="bg-{{ colors[i] }} rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                     style="width: 60px; height: 60px;">
+                                    {% if i == crew.status %}
+                                        <i class="fas fa-clock fa-lg text-white"></i>
+                                    {% else %}
+                                        <i class="fas fa-check fa-lg text-white"></i>
+                                    {% endif %}
+                                </div>
+                            {% else %}
+                                <div class="bg-secondary rounded-circle d-inline-flex align-items-center justify-content-center opacity-50" 
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-circle fa-lg text-white"></i>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="mt-2">
+                                <small class="fw-bold d-block">Step {{ i + 1 }}</small>
+                                <small class="text-muted">{{ stages[i] }}</small>
+                            </div>
+                        </div>
+                        
+                        {% if i < stages|length - 1 %}
+                        <div class="d-none d-md-block position-relative mt-2">
+                            <div class="border-top {% if i < crew.status %}border-{{ colors[i] }}{% else %}border-secondary opacity-50{% endif %}" 
+                                 style="position: absolute; width: 100%; top: -30px; left: 50%; z-index: -1;"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Current Status -->
+                <div class="alert alert-{{ colors[crew.status] }} mt-4">
+                    <div class="d-flex align-items-center">
+                        <i class="fas fa-info-circle fa-lg me-3"></i>
+                        <div>
+                            <h6 class="mb-1">Current Status: {{ stages[crew.status] }}</h6>
+                            {% if crew.status == 0 %}
+                                <small>Your application has been registered and is pending initial review.</small>
+                            {% elif crew.status == 1 %}
+                                <small>Your application is currently being screened by our team.</small>
+                            {% elif crew.status == 2 %}
+                                <small>Your documents have been verified and approved.</small>
+                            {% elif crew.status == 3 %}
+                                <small>Congratulations! Your application has been fully approved.</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <small class="fw-bold">Overall Progress</small>
+                        <small class="fw-bold">{{ ((crew.status + 1) / stages|length * 100)|round }}%</small>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar bg-{{ colors[crew.status] }}" 
+                             style="width: {{ ((crew.status + 1) / stages|length * 100)|round }}%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% elif not_found %}
+        <!-- Not Found -->
+        <div class="card mt-4">
+            <div class="card-body text-center py-5">
+                <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                <h5>Application Not Found</h5>
+                <p class="text-muted">
+                    No crew member found with the provided passport number. 
+                    Please check your passport number and try again.
+                </p>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-1"></i>
+                    Register New Application
+                </a>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Back to options -->
+        <div class="text-center mt-4">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-outline-secondary me-2">
+                <i class="fas fa-tachometer-alt me-1"></i>
+                Dashboard
+            </a>
+            <a href="{{ url_for('register') }}" class="btn btn-outline-primary">
+                <i class="fas fa-user-plus me-1"></i>
+                Register New Crew
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-uppercase passport input
+document.getElementById('passport').addEventListener('input', function(e) {
+    this.value = this.value.toUpperCase();
+});
+</script>
+{% endblock %}
